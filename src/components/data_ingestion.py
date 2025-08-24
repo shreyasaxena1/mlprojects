@@ -9,6 +9,8 @@ from src.exception import CustomException
 from src.logger import logging
 from src.components.data_transformstion import DataTransformation
 from src.components.data_transformstion import DataTransformationConfig
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
 
 
 # Input for data ingestion like where to save which file - only define variables
@@ -55,8 +57,12 @@ class DataIngestion:
             raise CustomException(e,sys)
 
 if __name__=="__main__":
-    obj = DataIngestion()
-    train_data,test_data = obj.initiate_data_ingestion()
-    obj2 = DataTransformation()
-    obj2.initiate_data_transformation(train_data,test_data)
+    data_ingestion_obj = DataIngestion()
+    train_data,test_data = data_ingestion_obj.initiate_data_ingestion()
+    data_transformation_obj = DataTransformation()
+    train_array, test_array, preprocessor_path = data_transformation_obj.initiate_data_transformation(train_data,test_data)
+    model_trainer_obj = ModelTrainer()
+    r2_score = model_trainer_obj.initiate_model_trainer(train_array,test_array,preprocessor_path)
+    print(r2_score)
+    
     
