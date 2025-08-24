@@ -7,6 +7,8 @@ from sklearn.model_selection import train_test_split
 
 from src.exception import CustomException
 from src.logger import logging
+from src.components.data_transformstion import DataTransformation
+from src.components.data_transformstion import DataTransformationConfig
 
 
 # Input for data ingestion like where to save which file - only define variables
@@ -54,4 +56,7 @@ class DataIngestion:
 
 if __name__=="__main__":
     obj = DataIngestion()
-    obj.initiate_data_ingestion()
+    train_data,test_data = obj.initiate_data_ingestion()
+    obj2 = DataTransformation()
+    obj2.initiate_data_transformation(train_data,test_data)
+    
